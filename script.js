@@ -1,26 +1,34 @@
-const apiKey = "SNUMB8CXAS372JEKQYM55BKE8";
+const apiKey = "SNUMB8CXAS372JEKQYM55BKE8"; 
 
 document.getElementById("searchBtn").addEventListener("click", getWeather);
 
 function getWeather() {
-  const city = document.getElementById("cityInput").value;
+  const city = document.getElementById("cityInput").value.trim();
   if (!city) {
     alert("Please enter a city name!");
     return;
   }
 
-  const url = `https://corsproxy.io/?https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?unitGroup=metric&key=${apiKey}&contentType=json`;
+  const url = https://corsproxy.io/?https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?unitGroup=metric&key=${apiKey}&contentType=json;
 
   fetch(url)
     .then(response => response.json())
     .then(data => {
-      console.log(data); // To see full data in browser console
-      document.getElementById("cityName").textContent = data.address;
-      document.getElementById("temp").textContent = `Temperature: ${data.currentConditions.temp} °C`;
-      document.getElementById("conditions").textContent = `Condition: ${data.currentConditions.conditions}`;
+      console.log(data); // for debugging in browser console
+
+      if (!data.currentConditions) {
+        alert("City not found or API returned no data.");
+        return;
+      }
+
+      document.getElementById("cityName").textContent = data.address || city;
+      document.getElementById("temp").textContent = 🌡️ Temperature: ${data.currentConditions.temp} °C;
+      document.getElementById("conditions").textContent = ☁️ Condition: ${data.currentConditions.conditions};
+      document.getElementById("humidity").textContent = 💧 Humidity: ${data.currentConditions.humidity}%;
+      document.getElementById("wind").textContent = 🌬️ Wind Speed: ${data.currentConditions.windspeed} km/h;
     })
     .catch(error => {
       console.error("Error fetching weather data:", error);
-      alert("Unable to fetch weather data. Please check the city name.");
+      alert("Unable to fetch weather data. Please check the city name or try again later.");
     });
 }
