@@ -9,7 +9,7 @@ function getWeather() {
     return;
   }
 
-  const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?unitGroup=metric&key=${apiKey}&contentType=json`;
+  const url = `https://corsproxy.io/?https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?unitGroup=metric&key=${apiKey}&contentType=json`;
 
   fetch(url)
     .then(response => response.json())
