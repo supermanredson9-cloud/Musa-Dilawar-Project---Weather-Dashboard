@@ -14,12 +14,16 @@ function getWeather() {
 
   fetch(url)
     .then(response => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
+      if (!response.ok) throw new Error("Network response was not ok");
       return response.json();
     })
     .then(data => {
+      console.log("API data:", data); // debug line
+      if (!data.currentConditions) {
+        alert("City not found or data unavailable.");
+        return;
+      }
+
       const weather = data.currentConditions;
 
       document.getElementById("cityName").textContent = data.address;
